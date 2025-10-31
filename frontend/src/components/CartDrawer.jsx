@@ -9,11 +9,13 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useCart } from "../context/CartContext";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { useNavigate } from "react-router-dom";
 
 export default function CartDrawer({ open, onClose }) {
-  const { cart, removeFromCart, clearCart } = useCart();
-
-  const total = cart.reduce((sum, p) => sum + p.price * p.qty, 0);
+  const navigate = useNavigate();
+  const { cart, removeFromCart, clearCart, total, updateQty } = useCart();
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
@@ -42,6 +44,15 @@ export default function CartDrawer({ open, onClose }) {
               <Typography variant="body2" color="#aaa">
                 ${p.price} × {p.qty}
               </Typography>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, my: 1 }}>
+                <IconButton size="small" color="inherit" onClick={() => updateQty(p.id, Math.max(0, p.qty - 1))}>
+                  <RemoveIcon fontSize="small" />
+                </IconButton>
+                <Typography>{p.qty}</Typography>
+                <IconButton size="small" color="inherit" onClick={() => updateQty(p.id, p.qty + 1)}>
+                  <AddIcon fontSize="small" />
+                </IconButton>
+              </Box>
               <Button
                 size="small"
                 color="error"
@@ -59,6 +70,10 @@ export default function CartDrawer({ open, onClose }) {
             fullWidth
             variant="contained"
             sx={{ mt: 2, backgroundColor: "#00bcd4", color: "#000" }}
+            onClick={() => {
+              onClose();
+              navigate("/checkout");
+            }}
           >
             Checkout
           </Button>

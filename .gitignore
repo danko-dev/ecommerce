@@ -18,3 +18,4 @@ frontend/.env
 # General
 *.log
 *.class
+/.metadata/

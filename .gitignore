@@ -1,0 +1,20 @@
+# Java / Spring Boot
+/backend/target/
+/backend/.idea/
+/backend/*.iml
+/backend/*.log
+/backend/.classpath
+/backend/.project
+
+# Node / React
+/frontend/node_modules/
+/frontend/dist/
+/frontend/build/
+frontend/.env
+
+# Mac / OS
+.DS_Store
+
+# General
+*.log
+*.class

@@ -36,12 +36,43 @@ export function UserProvider({ children }) {
     return named;
   };
 
+  const updateUser = async (updates) => {
+    if (!user?.id) return;
+    const res = await fetch(`http://localhost:8080/api/users/${user.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
+    });
+    const data = await res.json();
+    const merged = { ...user, ...data };
+    setUser(merged);
+    localStorage.setItem("user", JSON.stringify(merged));
+    return merged;
+  };
+
+  const changePassword = async (oldPassword, newPassword) => {
+    if (!user?.id) return;
+    const res = await fetch(`http://localhost:8080/api/users/${user.id}/password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ oldPassword, newPassword }),
+    });
+    return res.json();
+  };
+
+  const deleteUser = async () => {
+    if (!user?.id) return;
+    await fetch(`http://localhost:8080/api/users/${user.id}`, { method: "DELETE" });
+    setUser(null);
+    localStorage.removeItem("user");
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user");
   };
 
-  const value = useMemo(() => ({ user, login, signup, logout }), [user]);
+  const value = useMemo(() => ({ user, login, signup, updateUser, changePassword, deleteUser, logout }), [user]);
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 

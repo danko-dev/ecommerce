@@ -37,7 +37,7 @@ export default function Header() {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           {user ? (
             <>
-              <Typography sx={{ mr: 1, color: "#9ca3af" }}>Hi, {user.name}</Typography>
+              <Button color="inherit" component={Link} to="/account">Hi, {user.name}</Button>
               <Button color="inherit" size="small" onClick={logout}>Logout</Button>
             </>
           ) : (

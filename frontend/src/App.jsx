@@ -5,6 +5,7 @@ import Cart from "./components/Cart";
 import Checkout from "./pages/Checkout";
 import ProductDetail from "./pages/ProductDetail";
 import Auth from "./pages/Auth";
+import Account from "./pages/Account";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </Router>
   );
